@@ -1,6 +1,8 @@
 from app.models.model import Model
 from app.models.features.level1.prompt import LEVEL1_ANALYSIS_PROMPT
 from typing import Dict
+import asyncio
+import json
 
 class Level1Analyzer(Model):
     def __init__(self):
@@ -16,11 +18,11 @@ class Level1Analyzer(Model):
             )
             
             response = await self.llm.ainvoke(prompt_value)
-            return response
+
+            return response.content
             
         except Exception as e:
             raise Exception(f"Level 1 분석 중 오류 발생: {str(e)}")
-        
 
 if __name__ == "__main__":
     analyzer = Level1Analyzer()
@@ -37,4 +39,13 @@ if __name__ == "__main__":
         "input": "첫째 줄에 정수 N(1 ≤ N ≤ 500,000)이 주어진다.",
         "output": "첫째 줄에 남게 되는 카드의 번호를 출력한다."
     }
-    print(analyzer.analyze(problem))
+    
+    # 비동기 실행을 위한 메인 함수
+    async def main():
+        result = await analyzer.analyze(problem)
+        print("\n=== 분석 결과 ===\n")
+        print(result)
+        print("\n=== 분석 완료 ===\n")
+    
+    # 비동기 함수 실행
+    asyncio.run(main())
