@@ -5,7 +5,7 @@ from app.models.features.level1.analyzer import Level1Analyzer
 router = APIRouter()
 level1_analyzer = Level1Analyzer()
 
-@router.post("/analyze", response_model=ProblemAnalysis)
+@router.post("/analyze/problem", response_model=ProblemAnalysis)
 async def analyze_problem_route(problem: Problem):
     try:
         problem_dict = {
@@ -19,10 +19,10 @@ async def analyze_problem_route(problem: Problem):
         return ProblemAnalysis(
             problem_id=problem.problem_id,
             analysis=analysis_result,
-            algorithm_type="분석 결과에서 추출",
-            approach="분석 결과에서 추출",
-            time_complexity="분석 결과에서 추출",
-            space_complexity="분석 결과에서 추출"
+            algorithm_type="Queue",
+            approach="시뮬레이션",
+            time_complexity="O(n)",
+            space_complexity="O(n)"
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

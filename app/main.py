@@ -15,4 +15,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# 루트 경로 핸들러 추가
+@app.get("/")
+async def root():
+    return {"message": "Algorithm Analyzer AI API"}
+
+# API 라우터 등록
 app.include_router(router, prefix="/api")
