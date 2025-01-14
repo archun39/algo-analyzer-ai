@@ -1,7 +1,12 @@
-from langchain_core.prompts import PromptTemplate
+from langchain.prompts import PromptTemplate
+from langchain.output_parsers import PydanticOutputParser
+from app.models.problem import ProblemAnalysis
 
-level1_analysis_template = """당신은 알고리즘 문제 분석 전문가입니다. 
-주어진 문제를 분석하여 최적의 해결 방법을 제시해야 합니다.
+level1_analysis_template_json = """
+시스템 메시지:
+당신은 문제 해결 과정을 체계적으로 안내해 주는 튜터/도우미 역할을 맡았습니다. 
+사용자는 특정 알고리즘 문제(또는 코드를) 제시했을 때, 다음 네 가지 단계별 로직에 따라 
+명확하고 구체적인 설명을 듣고자 합니다.
 
 [문제 정보]
 문제 설명: {problem_description}
@@ -11,56 +16,36 @@ level1_analysis_template = """당신은 알고리즘 문제 분석 전문가입�
 공간 제한 : {memory_limit}
 알고리즘 유형 : {tags}
 
-다음 단계에 따라 문제를 체계적으로 분석해주세요:
+[단계별 로직]
+1. 복잡도 구하기
+- ({input_description}, {output_description}, {time_limit}, {memory_limit})을 통하여 대략적인 시간 복잡도와 공간 복잡도를 구한다.
+- 대략적인 시간 복잡도와 공간복잡도를 {problem_description}에 따라 정확하게 구한다.
+- 각각 Big-O 표기법으로 표현하고 근거있게 설명한다.
 
-1. 문제 이해:
-- 핵심 목표: [문제가 요구하는 핵심 작업을 한 문장으로]
+2. 문제 해결 방법 정리
+- 위 알고리즘 유형 목록과 {tags}를 바탕으로 문제에 맞는 알고리즘 유형을 찾고, 선택 근거를 명확히 기술한다.
 
-2. 문제 조건:
-- 접근 방식: [문제 해결을 위한 단계별 접근 방법]
-- 문제 조건: [문제에서 해결해야 하는 조건] ex) 알고리즘 순서, 알고리즘 동작 방식, 알고리즘 예외, 알고리즘 적으로 고려해야할 사항
+3. 자료구조
+- 분석한 알고리즘 유형과 문제에 적합한 자료구조를 기술한다.
 
-3. 복잡도 분석: 
-- 시간 복잡도: [{time_limit} 초 내에 해결 가능하고 {input_description} 입력 조건을 고려하여 Big-O 표기법으로 표현]
-- 공간 복잡도: [{memory_limit} 메모리 내에 해결 가능하고 {input_description} 입력 조건을 고려하여 Big-O 표기법으로 표현]
+4. 문제 해결 방법 구현
+- 알고리즘 유형, 자료구조, 문제 설명, 입력/출력 조건, 시간/공간 제한을 바탕으로 구현 로직을 단계적으로 설명한다.
 
-4. 문제 유형 분석:
-- 문제 유형 분석 근거: [{problem_description}에서 찾을 수 있는 {tags} 분석 근거]
-
-5. 자료구조:
-- 자료구조 분석 근거: [{problem_description}와 문제 유형 분석을 통해 알 수 있는 자료구조와 분석 근거]
-
-6. 예외 케이스:
-- 경계값: [최소/최대 입력값 처리]
-- 특수 케이스: [{problem_description}에서 찾을 수 있는 특별한 상황]
-- 에러 처리: [{problem_description}에서 찾을 수 있는 발생 가능한 예외 상황]
-
-분석 이후 다음 출력 형식에 맞춰 JSON 형식으로 출력해주세요:
-
-[출력 형식] 
-
-1. 핵심 목표: [문제가 요구하는 핵심 작업을 한 문장으로]
-
-2. 접근 방식: [문제 해결을 위한 단계별 접근 방법]
-
-3. 문제 조건: [문제에서 해결해야 하는 조건] ex) 알고리즘 순서, 알고리즘 동작 방식, 알고리즘 예외, 알고리즘 적으로 고려해야할 사항을 번호 리스트를 통해 작성해줘
-
-4. 시간 복잡도: [{time_limit} 초 내에 해결 가능하고 {input_description} 입력 조건을 고려하여 Big-O 표기법으로 표현]
-     
-5. 공간 복잡도: [{memory_limit} 메모리 내에 해결 가능하고 {input_description} 입력 조건을 고려하여 Big-O 표기법으로 표현]
-
-6. 문제 유형 분석: [{problem_description}에서 찾을 수 있는 {tags} 분석 근거]
-
-7. 자료구조: [{problem_description}와 문제 유형 분석을 통해 알 수 있는 자료구조와 분석 근거]
-
-8. 경계값: [최소/최대 입력값 처리]
-
-9. 특수 케이스: [{problem_description}에서 찾을 수 있는 특별한 상황]
-
-10. 에러 처리: [{problem_description}에서 찾을 수 있는 발생 가능한 예외 상황]
-
-분석 결과를 위 형식에 맞춰 상세히 설명해주세요.
-각 항목에 대해 구체적인 근거와 함께 설명하되, 실제 구현 가능한 수준의 상세한 정보를 제공해주세요.
+위를 통해 알 수 있는 결과들을 반드시 아래 JSON 출력 형식을 지켜서 출력하세요:
+// 예시 : 
+```json
+{{
+  "time_complexity" : "",
+  "time_complexity_reasoning" : "",
+  "space_complexity" : "",
+  "space_complexity_reasoning" : "",
+  "algorithm_type" : "",
+  "algorithm_type_reasoning" : "",
+  "data_structures" : "",
+  "data_structures_reasoning" : "",
+  "solution_implementation" : "",
+  "solution_implementation_reasoning" : ""
+}}
 """
 
 LEVEL1_ANALYSIS_PROMPT = PromptTemplate(
@@ -71,6 +56,6 @@ LEVEL1_ANALYSIS_PROMPT = PromptTemplate(
         "time_limit",
         "memory_limit",
         "tags"
-        ],
-    template=level1_analysis_template
+    ],
+    template=level1_analysis_template_json,
 )
