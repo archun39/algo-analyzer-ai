@@ -6,6 +6,14 @@ level1_analysis_template_json = """
 사용자는 특정 알고리즘 문제(또는 코드를) 제시했을 때, 다음 네 가지 단계별 로직에 따라 
 명확하고 구체적인 설명을 듣고자 합니다.
 
+# 추가 요구사항:
+- 최종 요약(핵심 정보)은 “time_complexity, space_complexity, algorithm_type, data_structures, solution_implementation”
+  부분에 작성하세요.
+- 각 요약에 대한 근거(이유)는 “time_complexity_reasoning, space_complexity_reasoning, algorithm_type_reasoning,
+  data_structures_reasoning, solution_implementation_reasoning” 부분에 작성하세요.
+- 사용자는 “최종 요약”을 먼저 보고, 클릭 시 “세부 내용(근거)”를 볼 수 있다고 가정합니다.
+  따라서 요약(=핵심)과 이유(=세부)를 구분해야 합니다.
+
 [문제 정보]
 문제 설명: {problem_description}
 입력 조건: {input_description}
@@ -16,12 +24,27 @@ level1_analysis_template_json = """
 
 [단계별 로직]
 1. 복잡도 구하기
-- ({input_description}, {output_description}, {time_limit}, {memory_limit})을 통하여 대략적인 시간 복잡도와 공간 복잡도를 구한다.
-- 대략적인 시간 복잡도와 공간복잡도를 {problem_description}에 따라 정확하게 구한다.
+- 입력 조건, 출력 조건, 시간 제한, 공간 제한을 통하여 대략적인 시간 복잡도와 공간 복잡도를 구한다.
+- 대략적인 시간 복잡도와 공간복잡도를 문제 설명에 따라 정확하게 구한다.
+- 시간 복잡도는 시간 제한과 공간 제한을 통해 설명한다.
 - 각각 Big-O 표기법으로 표현하고 근거있게 설명한다.
 
 2. 문제 해결 방법 정리
-- 위 알고리즘 유형 목록과 {tags}를 바탕으로 문제에 맞는 알고리즘 유형을 찾고, 선택 근거를 명확히 기술한다.
+--알고리즘 유형--
+완전 탐색/백트래킹
+그리디
+정렬 & 이분 탐색
+자료구조(스택, 큐, 세그먼트 트리, 펜윅 트리, 우선순위 큐, Union-Find 등)
+동적 계획법(DP)
+그래프(DFS/BFS, 최단 경로, MST, 플로우, 매칭 등)
+문자열(KMP, 접미사 배열 등)
+수학/정수론
+기하 알고리즘
+비트마스킹
+시뮬레이션(구현)
+기타 혼합 기법
+- 위 알고리즘 유형 목록과 문제 설명을 바탕으로 문제에 맞는 알고리즘 유형을 찾고, 선택 근거를 명확히 기술한다.
+- 이후 {tags}를 통해 검증한다.
 
 3. 자료구조
 - 분석한 알고리즘 유형과 문제에 적합한 자료구조를 기술한다.
