@@ -8,7 +8,6 @@ level1_analyzer = Level1Analyzer()
 @router.post("/analyze/problem", response_model=ProblemAnalysis)
 async def analyze_problem_route(problem: Problem) -> ProblemAnalysis:
     try:
-        
 
         analysis_result = await level1_analyzer.analyze(problem)
         
