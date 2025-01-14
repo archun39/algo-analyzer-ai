@@ -1,6 +1,4 @@
 from langchain.prompts import PromptTemplate
-from langchain.output_parsers import PydanticOutputParser
-from app.models.problem import ProblemAnalysis
 
 level1_analysis_template_json = """
 시스템 메시지:

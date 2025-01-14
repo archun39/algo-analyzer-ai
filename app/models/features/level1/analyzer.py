@@ -3,7 +3,6 @@ from app.models.features.level1.prompt import LEVEL1_ANALYSIS_PROMPT
 from app.models.problem import ProblemAnalysis, Problem
 from typing import Dict
 from langchain.output_parsers import PydanticOutputParser
-from langchain.chains import LLMChain
 
 class Level1Analyzer(Model):
     def __init__(self):
