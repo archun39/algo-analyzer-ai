@@ -13,11 +13,10 @@ class Level1Analyzer(Model):
 
     async def analyze(self, problem: Problem) -> ProblemAnalysis:
         try:
-            print("체인 생성 시작")
-
+            #체인 생성
             analysis_chain = self.prompt | self.llm | self.parser
-            print("체인 생성 완료")
 
+            # 입력 데이터 생성
             analysis_input = {
                 "problem_description": problem.description,
                 "input_description": problem.input,
@@ -26,11 +25,10 @@ class Level1Analyzer(Model):
                 "memory_limit": problem.memory_limit,
                 "tags": ', '.join(problem.tags)
             }    
-            print(analysis_input)  
+
             # PromptTemplate에 필요한 변수를 키워드 인자로 넘김
             analysis_result = await analysis_chain.ainvoke(analysis_input)
 
-            print("체인 실행 완료")
             return analysis_result
 
         except Exception as e:

@@ -16,9 +16,9 @@ class Problem(BaseModel):
 class ProblemAnalysis(BaseModel):
     """문제 분석 결과를 담는 모델"""
     time_complexity: str = Field(..., description="시간 복잡도")
-    time_complexity_reasoning: str = Field(..., description="시간 복잡도를 포함한 설명")
+    time_complexity_reasoning: str = Field(..., description="시간 복잡도를 분석한 근거 설명")
     space_complexity: str = Field(..., description="공간 복잡도")
-    space_complexity_reasoning: str = Field(..., description="공간 복잡도를 포함한 설명")
+    space_complexity_reasoning: str = Field(..., description="공간 복잡도를 분석한 근거 설명")
     algorithm_type: str = Field(..., description="알고리즘 유형")
     algorithm_type_reasoning: str = Field(..., description="알고리즘 유형을 선택한 근거 설명")
     data_structures: str = Field(..., description="사용된 자료구조")
