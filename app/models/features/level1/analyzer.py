@@ -3,7 +3,9 @@ from app.models.features.level1.prompt import LEVEL1_ANALYSIS_PROMPT
 from app.models.problem import ProblemAnalysis, Problem
 from typing import Dict
 from langchain.output_parsers import PydanticOutputParser
-from langchain.chains import LLMChain
+
+# LangChain import
+from langchain.output_parsers import PydanticOutputParser
 
 class Level1Analyzer(Model):
     def __init__(self):
@@ -18,11 +20,11 @@ class Level1Analyzer(Model):
 
             # 입력 데이터 생성
             analysis_input = {
-                "problem_description": problem.description,
-                "input_description": problem.input,
-                "output_description": problem.output,
-                "time_limit": problem.time_limit,
-                "memory_limit": problem.memory_limit,
+                "problemDescription": problem.description,
+                "inputDescription": problem.input,
+                "outputDescription": problem.output,
+                "timeLimit": problem.timeLimit,
+                "memoryLimit": problem.memoryLimit,
                 "tags": ', '.join(problem.tags)
             }    
 
