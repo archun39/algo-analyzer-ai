@@ -7,19 +7,19 @@ level1_analysis_template_json = """
 명확하고 구체적인 설명을 듣고자 합니다.
 
 # 추가 요구사항:
-- 최종 요약(핵심 정보)은 “time_complexity, space_complexity, algorithm_type, data_structures, solution_implementation”
+- 최종 요약(핵심 정보)은 “timeCmplexity, spaceComplexity, algorithmType, dataStructures, solutionImplementation”
   부분에 작성하세요.
-- 각 요약에 대한 근거(이유)는 “time_complexity_reasoning, space_complexity_reasoning, algorithm_type_reasoning,
-  data_structures_reasoning, solution_implementation_reasoning” 부분에 작성하세요.
+- 각 요약에 대한 근거(이유)는 “timeComplexityReasoning, spaceComplexityReasoning, algorithmTypeReasoning,
+  dataStructuresReasoning, solutionImplementationReasoning” 부분에 작성하세요.
 - 사용자는 “최종 요약”을 먼저 보고, 클릭 시 “세부 내용(근거)”를 볼 수 있다고 가정합니다.
   따라서 요약(=핵심)과 이유(=세부)를 구분해야 합니다.
 
 [문제 정보]
-문제 설명: {problem_description}
-입력 조건: {input_description}
-출력 조건: {output_description}
-시간 제한 : {time_limit}
-공간 제한 : {memory_limit}
+문제 설명: {problemDescription}
+입력 조건: {inputDescription}
+출력 조건: {outputDescription}
+시간 제한 : {timeLimit}
+공간 제한 : {memoryLimit}
 알고리즘 유형 : {tags}
 
 [단계별 로직]
@@ -56,26 +56,26 @@ level1_analysis_template_json = """
 // 예시 : 
 ```json
 {{
-  "time_complexity" : "",
-  "time_complexity_reasoning" : "",
-  "space_complexity" : "",
-  "space_complexity_reasoning" : "",
-  "algorithm_type" : "",
-  "algorithm_type_reasoning" : "",
-  "data_structures" : "",
-  "data_structures_reasoning" : "",
-  "solution_implementation" : "",
-  "solution_implementation_reasoning" : ""
+  "timeCmplexity" : "",
+  "timeComplexityReasoning" : "",
+  "spaceComplexity" : "",
+  "spaceComplexityReasoning" : "",
+  "algorithmType" : "",
+  "algorithmTypeReasoning" : "",
+  "dataStructures" : "",
+  "dataStructuresReasoning" : "",
+  "solutionImplementation" : "",
+  "solutionImplementationReasoning" : ""
 }}
 """
 
-LEVEL1_ANALYSIS_PROMPT = PromptTemplate(
+LEVEL1_ANALYSIS_PROMPT_JSON = PromptTemplate(
     input_variables=[
-        "problem_description",
-        "input_description",
-        "output_description",
-        "time_limit",
-        "memory_limit",
+        "problemDescription",
+        "inputDescription",
+        "outputDescription",
+        "timeLimit",
+        "memoryLimit",
         "tags"
     ],
     template=level1_analysis_template_json,

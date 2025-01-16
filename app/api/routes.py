@@ -10,6 +10,8 @@ async def analyze_problem_route(problem: Problem) -> ProblemAnalysis:
     try:
 
         analysis_result = await level1_analyzer.analyze(problem)
+
+        print(analysis_result)
         
         return analysis_result
     except Exception as e:
