@@ -69,7 +69,7 @@ level1_analysis_template_json = """
 }}
 """
 
-LEVEL1_ANALYSIS_PROMPT_JSON = PromptTemplate(
+LEVEL1_ANALYSIS_PROMPT = PromptTemplate(
     input_variables=[
         "problemDescription",
         "inputDescription",
