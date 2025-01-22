@@ -20,6 +20,7 @@ class Level1Analyzer(Model):
 
             # 입력 데이터 생성
             analysis_input = {
+                "problemId": problem.problemId,
                 "problemDescription": problem.description,
                 "inputDescription": problem.input,
                 "outputDescription": problem.output,

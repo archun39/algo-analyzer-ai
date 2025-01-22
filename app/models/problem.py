@@ -15,6 +15,7 @@ class Problem(BaseModel):
 # 응답 모델
 class ProblemAnalysis(BaseModel):
     """문제 분석 결과를 담는 모델"""
+    problemId: int
     timeCmplexity: str = Field(..., description="시간 복잡도")
     timeComplexityReasoning: str = Field(..., description="시간 복잡도를 분석한 근거 설명")
     spaceComplexity: str = Field(..., description="공간 복잡도")

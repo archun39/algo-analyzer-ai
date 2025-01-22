@@ -56,6 +56,7 @@ level1_analysis_template_json = """
 // 예시 : 
 ```json
 {{
+  "problemId" : "{problemId}",
   "timeCmplexity" : "",
   "timeComplexityReasoning" : "",
   "spaceComplexity" : "",
@@ -71,6 +72,7 @@ level1_analysis_template_json = """
 
 LEVEL1_ANALYSIS_PROMPT = PromptTemplate(
     input_variables=[
+        "problemId",
         "problemDescription",
         "inputDescription",
         "outputDescription",
