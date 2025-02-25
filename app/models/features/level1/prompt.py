@@ -57,7 +57,7 @@ level1_analysis_template_json = """
 ```json
 {{
   "problemId" : "{problemId}",
-  "timeCmplexity" : "",
+  "timeComplexity" : "",
   "timeComplexityReasoning" : "",
   "spaceComplexity" : "",
   "spaceComplexityReasoning" : "",
