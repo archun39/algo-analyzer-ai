@@ -11,6 +11,7 @@ class GPTModel(BaseLLM):
         load_dotenv()
         self.client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.model_name = os.getenv("MODEL_NAME")
+        print(f"Using model version: {os.getenv('MODEL_NAME')}")
     
     async def generate_response(self, prompt: str, **kwargs):
         try:
