@@ -1,6 +1,7 @@
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 import os
+import asyncio
 
 load_dotenv()
 
@@ -22,16 +23,22 @@ class Model:
                 temperature=0.0,
                 openai_api_key=self.api_key
             )
+
         except Exception as e:
             raise Exception(f"LLM 초기화 실패: {str(e)}")
 
+    # LLM 연결 테스트를 위한 비동기 메서드 추가
     async def test_connection(self):
         """LLM 연결 테스트"""
         try:
-            test_response = await self.llm.ainvoke("테스트 메시지입니다.")
+            _ = await self.llm.ainvoke("테스트 메시지입니다.")
             return True
         except Exception as e:
             print(f"LLM 연결 테스트 실패: {str(e)}")
             return False
 
-    
+if __name__ == "__main__":
+    model = Model()
+    # 직접 테스트할 때는 이벤트 루프 사용
+    ok = asyncio.run(model.test_connection())
+    print(ok)

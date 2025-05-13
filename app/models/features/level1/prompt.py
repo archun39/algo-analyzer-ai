@@ -7,7 +7,7 @@ level1_analysis_template_json = """
 명확하고 구체적인 설명을 듣고자 합니다.
 
 # 추가 요구사항:
-- 최종 요약(핵심 정보)은 “timeCmplexity, spaceComplexity, algorithmType, dataStructures, solutionImplementation”
+- 최종 요약(핵심 정보)은 “timeComplexity, spaceComplexity, algorithmType, dataStructures, solutionImplementation”
   부분에 작성하세요.
 - 각 요약에 대한 근거(이유)는 “timeComplexityReasoning, spaceComplexityReasoning, algorithmTypeReasoning,
   dataStructuresReasoning, solutionImplementationReasoning” 부분에 작성하세요.

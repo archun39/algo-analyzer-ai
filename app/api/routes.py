@@ -2,11 +2,22 @@ from fastapi import APIRouter, HTTPException
 from app.models.problem import Problem, ProblemAnalysis
 from app.models.features.level1.analyzer import Level1Analyzer
 from app.models.features.level2.analyzer import Level2Analyzer
+import os
 router = APIRouter()
 
-level_setting = 2
 
-@router.post("/analyze/problem", response_model=ProblemAnalysis)
+@router.get("/health")
+async def health_check():
+    """GPT (OpenAI) 연결 상태 확인 엔드포인트"""
+
+    analyzer = Level1Analyzer()
+    
+    ok = await analyzer.test_connection()
+    return {"gpt_connected": ok}
+
+level_setting = 1
+
+@router.post("/internal/problems/{problemId}/analysis", response_model=ProblemAnalysis)
 async def analyze_problem_route(problem: Problem) -> ProblemAnalysis:
     try:
 
@@ -16,8 +27,6 @@ async def analyze_problem_route(problem: Problem) -> ProblemAnalysis:
 
         analysis_result = await analyzer.analyze(problem)
 
-        print(analysis_result)
-        
         return analysis_result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
